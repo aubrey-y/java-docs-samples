@@ -39,7 +39,7 @@ limitations under the License.
         <endpoints.framework.version>2.2.1</endpoints.framework.version>
         <endpoints.management.version>1.0.12</endpoints.management.version>
 
-        <endpoints.project.id>YOUR_PROJECT_ID</endpoints.project.id>
+        <endpoints.project.id>course-gen</endpoints.project.id>
     </properties>
 
     <dependencies>
@@ -58,18 +58,40 @@ limitations under the License.
             <artifactId>spring-web</artifactId>
             <version>5.2.7.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.3.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.1</version>
+        </dependency>
 
         <!-- Compile/runtime dependencies -->
         <dependency>
             <groupId>com.google.endpoints</groupId>
             <artifactId>endpoints-framework</artifactId>
             <version>${endpoints.framework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- [START api_management] -->
         <dependency>
             <groupId>com.google.endpoints</groupId>
             <artifactId>endpoints-management-control-appengine-all</artifactId>
             <version>1.0.12</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- [END api_management] -->
 
@@ -95,7 +117,7 @@ limitations under the License.
                 <version>2.4.0</version>
                 <configuration>
                     <to>
-                        <image>gcr.io/PROJECT_ID/endpoints-container</image>
+                        <image>gcr.io/${endpoints.project.id}/endpoints-container</image>
                     </to>
                 </configuration>
             </plugin>
