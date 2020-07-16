@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     ),
     issuers = { @ApiIssuer(
         name = "firebase",
-        issuer = "https://securetoken.google.com/YOUR-PROJECT-ID",
+        issuer = "https://securetoken.google.com/course-gen",
         jwksUri = "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com"
     )}
 )
