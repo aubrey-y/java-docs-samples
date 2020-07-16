@@ -84,7 +84,7 @@ limitations under the License.
         <!-- [START api_management] -->
         <dependency>
             <groupId>com.google.endpoints</groupId>
-            <artifactId>endpoints-management-control-appengine-all</artifactId>
+            <artifactId>endpoints-management-control</artifactId>
             <version>1.0.12</version>
             <exclusions>
                 <exclusion>
