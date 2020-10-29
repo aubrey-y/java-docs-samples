@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.google.cloud.samples</groupId>
     <artifactId>shared-configuration</artifactId>
-    <version>1.0.18</version>
+    <version>1.0.21</version>
   </parent>
 
   <properties>
@@ -36,8 +36,8 @@
 
     <failOnMissingWebXml>false</failOnMissingWebXml> <!-- REQUIRED -->
 
-    <appengine.maven.plugin>2.3.0</appengine.maven.plugin>
-    <jetty>9.4.31.v20200723</jetty>
+    <appengine.maven.plugin>2.4.0</appengine.maven.plugin>
+    <jetty>9.4.32.v20200930</jetty>
   </properties>
 
 <!-- FIXME(lesv) Temporary fix due to Datastore having the wrong version -->
@@ -64,12 +64,12 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-pubsub</artifactId>
-      <version>1.108.1</version>
+      <version>1.108.6</version>
     </dependency>
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-datastore</artifactId>
-      <version>1.104.0</version>
+      <version>1.105.0</version>
     </dependency>
 
     <!-- Test Dependencies -->
@@ -89,7 +89,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13</version>
+      <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>

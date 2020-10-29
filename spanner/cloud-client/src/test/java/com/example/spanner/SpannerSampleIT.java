@@ -79,6 +79,7 @@ public class SpannerSampleIT {
     dbClient.dropDatabase(dbId.getInstanceId().getInstance(), dbId.getDatabase());
     dbClient.dropDatabase(
         dbId.getInstanceId().getInstance(), SpannerSample.createRestoredSampleDbId(dbId));
+    spanner.close();
   }
 
   @Test
@@ -252,6 +253,10 @@ public class SpannerSampleIT {
     assertThat(out).contains("19 Venue 19");
     assertThat(out).contains("42 Venue 42");
 
+    out = runSample("querywithnumeric");
+    assertThat(out).contains("19 Venue 19 1200100");
+    assertThat(out).contains("42 Venue 42 390650.99");
+
     out = runSample("clientwithqueryoptions");
     assertThat(out).contains("1 1 Total Junk");
     out = runSample("querywithqueryoptions");
@@ -270,12 +275,18 @@ public class SpannerSampleIT {
     assertThat(out).contains(
         "Backup operation for [" + backupId + "_cancel] successfully cancelled");
 
-    out = runSample("listbackupoperations");
-    assertThat(out).contains(
-        String.format(
-            "Backup %s on database %s pending:",
-            backupId.getName(),
-            dbId.getName()));
+    // TODO: remove try-catch when filtering on metadata fields works.
+    try {
+      out = runSample("listbackupoperations");
+      assertThat(out).contains(
+          String.format(
+              "Backup %s on database %s pending:",
+              backupId.getName(),
+              dbId.getName()));
+    } catch (SpannerException e) {
+      assertThat(e.getErrorCode()).isEqualTo(ErrorCode.INVALID_ARGUMENT);
+      assertThat(e.getMessage()).contains("Cannot evaluate filter expression");
+    }
 
     out = runSample("listbackups");
     assertThat(out).contains("All backups:");

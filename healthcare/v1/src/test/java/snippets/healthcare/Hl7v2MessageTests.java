@@ -118,6 +118,7 @@ public class Hl7v2MessageTests {
   }
 
   @Test
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public void test_HL7v2MessageCreate() throws Exception {
     HL7v2MessageCreate.hl7v2MessageCreate(
         hl7v2StoreName, "new-hl7v2-message", "src/test/resources/hl7v2-sample-ingest.txt");
@@ -127,6 +128,7 @@ public class Hl7v2MessageTests {
   }
 
   @Test
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public void test_GetHL7v2Message() throws Exception {
     HL7v2MessageGet.hl7v2MessageGet(messageName);
 
@@ -138,9 +140,9 @@ public class Hl7v2MessageTests {
   public void test_Hl7v2MessageList() throws Exception {
     // There can be a delay between when a message is created
     // or ingested and when it's viewable when listing messages
-    // in a store, so sleep for 10 seconds while waiting for
+    // in a store, so sleep for 30 seconds while waiting for
     // the message to fully propagate.
-    Thread.sleep(10000);
+    Thread.sleep(30000);
     HL7v2MessageList.hl7v2MessageList(hl7v2StoreName);
 
     String output = bout.toString();
@@ -165,6 +167,7 @@ public class Hl7v2MessageTests {
   }
 
   @Test
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   public void test_DeleteHL7v2Message() throws Exception {
     HL7v2MessageDelete.hl7v2MessageDelete(messageName);
 
