@@ -31,15 +31,10 @@ limitations under the License.
     </parent>
 
     <properties>
-        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-
-        <endpoints.framework.version>2.2.1</endpoints.framework.version>
-        <endpoints.management.version>1.0.12</endpoints.management.version>
-
-        <endpoints.project.id>YOUR_PROJECT_ID</endpoints.project.id>
+        <endpoints.project.id>PROJECT ID</endpoints.project.id>
     </properties>
 
     <dependencies>
@@ -58,26 +53,48 @@ limitations under the License.
             <artifactId>spring-web</artifactId>
             <version>5.2.7.RELEASE</version>
         </dependency>
-
-        <!-- Compile/runtime dependencies -->
         <dependency>
-            <groupId>com.google.endpoints</groupId>
-            <artifactId>endpoints-framework</artifactId>
-            <version>${endpoints.framework.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.3.1.RELEASE</version>
         </dependency>
-        <!-- [START api_management] -->
         <dependency>
-            <groupId>com.google.endpoints</groupId>
-            <artifactId>endpoints-management-control-appengine-all</artifactId>
-            <version>1.0.12</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.1</version>
         </dependency>
-        <!-- [END api_management] -->
-
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-servlet-initializer-v2</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.4.3</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.3.3.RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -87,31 +104,49 @@ limitations under the License.
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.1.RELEASE</version>
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-            <!-- [START run_events_gcs_jib] -->
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>2.4.0</version>
                 <configuration>
                     <to>
-                        <image>gcr.io/PROJECT_ID/endpoints-container</image>
+                        <image>gcr.io/${endpoints.project.id}/endpoints-container</image>
                     </to>
                 </configuration>
             </plugin>
-            <!-- [END run_events_gcs_jib] -->
-            <!-- [START endpoints_plugin] -->
             <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>endpoints-framework-maven-plugin</artifactId>
-                <version>2.0.1</version>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <!-- plugin configuration -->
-                    <hostname>${endpoints.project.id}.appspot.com</hostname>
-                    <basePath>/api</basePath>
+                    <apiDocsUrl>http://localhost:8080/v3/api-docs.yaml</apiDocsUrl>
+                    <outputFileName>openapi-run.yaml</outputFileName>
+                    <outputDir>${project.basedir}</outputDir>
                 </configuration>
             </plugin>
-            <!-- [END endpoints_plugin] -->
         </plugins>
     </build>
 
